@@ -1,6 +1,7 @@
 import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { getOwner } from "@ember/application";
+import { action } from "@ember/object";
 
 const componentNameOverrides = {
   // avoids name collision with core's custom-html component
@@ -9,11 +10,16 @@ const componentNameOverrides = {
 
 export default class RightSidebarBlocks extends Component {
   @tracked blocks = [];
+  @tracked hidden = false;
 
   constructor() {
     super(...arguments);
 
     const blocksArray = [];
+    this.hidden = localStorage.getItem("right-sidebar-blocks-hidden") === "true";
+    if (this.hidden) {
+      return;
+    }
 
     JSON.parse(settings.blocks).forEach((block) => {
       block.internalName =
@@ -39,5 +45,12 @@ export default class RightSidebarBlocks extends Component {
     });
 
     this.blocks = blocksArray;
+  }
+
+  @action
+  hide() {
+    this.hidden = true;
+    // save hidden state to local storage
+    localStorage.setItem("right-sidebar-blocks-hidden", "true");
   }
 }
