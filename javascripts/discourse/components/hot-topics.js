@@ -17,7 +17,9 @@ export default class HotTopics extends Component {
 
     ajax(hotTopicsUrl).then((data) => {
       let results = [];
-      results = data.topic_list.topics;
+      results = data.topic_list.topics.filter((topic) => {
+        return !topic.pinned;
+      });
       this.hotTopics = results.slice(0, count);
       this.hotTopics = this.hotTopics.map((topic) => {
         topic["category"] = Category.findById(topic.category_id);
