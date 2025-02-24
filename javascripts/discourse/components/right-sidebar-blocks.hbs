@@ -1,0 +1,22 @@
+{{#unless this.hidden}}
+  <div class="tc-right-sidebar">
+    <PluginOutlet @name="above-right-sidebar-blocks" />
+    <FlatButton
+      @icon="times"
+      @action={{action "hide"}}
+      class="hide-right-sidebar"
+    />
+    <div class="tc-right-sidebar-container">
+      {{#each this.blocks as |block|}}
+        <div class={{block.classNames}}>
+          {{component block.internalName params=block.parsedParams}}
+        </div>
+        <PluginOutlet
+          @name="below-right-sidebar-block"
+          @outletArgs={{hash block=block}}
+        />
+      {{/each}}
+    </div>
+    <PluginOutlet @name="below-right-sidebar-blocks" />
+  </div>
+{{/unless}}

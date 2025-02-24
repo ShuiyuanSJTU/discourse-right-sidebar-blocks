@@ -16,7 +16,8 @@ export default class RightSidebarBlocks extends Component {
     super(...arguments);
 
     const blocksArray = [];
-    this.hidden = localStorage.getItem("right-sidebar-blocks-hidden") === "true";
+    this.hidden =
+      localStorage.getItem("right-sidebar-blocks-hidden") === "true";
     if (this.hidden) {
       return;
     }
