@@ -1,6 +1,8 @@
 import Component from "@ember/component";
+import { action } from "@ember/object";
 import { service } from "@ember/service";
 import { tagName } from "@ember-decorators/component";
+import DButton from "discourse/components/d-button";
 import discourseComputed from "discourse/lib/decorators";
 import RightSidebarBlocks from "../../components/right-sidebar-blocks";
 
@@ -9,14 +11,28 @@ export default class TcRightSidebar extends Component {
   @service router;
   @service site;
 
+  hidden = localStorage.getItem("right-sidebar-blocks-hidden") === "true";
+
+  @action
+  hide() {
+    this.set("hidden", true);
+    // save hidden state to local storage
+    localStorage.setItem("right-sidebar-blocks-hidden", "true");
+  }
+
   @discourseComputed(
     "router.currentRouteName",
     "router.currentRoute.attributes.category",
     "router.currentRoute.attributes.category.slug",
-    "router.currentRoute.attributes.tag.id"
+    "router.currentRoute.attributes.tag.id",
+    "hidden"
   )
-  showSidebar(currentRouteName, category, categorySlug, tagId) {
+  showSidebar(currentRouteName, category, categorySlug, tagId, hidden) {
     if (this.site.mobileView) {
+      return false;
+    }
+
+    if (hidden) {
       return false;
     }
 
@@ -51,6 +67,11 @@ export default class TcRightSidebar extends Component {
   <template>
     {{#if this.showSidebar}}
       <div class="tc-right-sidebar">
+        <DButton
+          @icon="xmark"
+          @action={{this.hide}}
+          class="hide-right-sidebar btn-flat"
+        />
         <RightSidebarBlocks />
       </div>
     {{/if}}
