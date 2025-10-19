@@ -6,7 +6,7 @@
   display: none;
 }
 
-@media screen and (min-width: 767px) {
+@media screen and (width >= 767px) {
   // Show the sidebar at 767px
   .tc-right-sidebar {
     display: block;
@@ -29,6 +29,7 @@
 
 .rs-component {
   margin-bottom: 1.5em;
+
   h3 {
     border-bottom: 1px solid var(--primary-low);
     padding-bottom: 0.5em;
@@ -53,11 +54,13 @@
 .top-contributors--user-likes {
   grid-area: right;
   justify-self: end;
+  white-space: nowrap;
 }
 
 // Recent replies
 .recent-replies--reply {
   display: flex;
+
   &:not(:last-child) {
     padding-bottom: 1em;
     border-bottom: 1px solid var(--primary-low);
@@ -69,6 +72,7 @@
   &:first-child {
     padding-top: 0.05em;
   }
+
   &:nth-child(2) {
     margin: 0 0.5em;
     flex-shrink: 1;
@@ -95,6 +99,7 @@
 .top-topics__topic {
   flex-wrap: wrap;
   justify-content: space-between;
+
   @extend .recent-replies--reply;
 }
 
@@ -137,7 +142,6 @@
 }
 
 // Subcategory list
-
 .subcategory-list--item {
   > .subcategory {
     display: flex;
@@ -150,7 +154,6 @@
 }
 
 // category list
-
 .category-list__category {
   &:not(:last-child) {
     margin-bottom: 0.5em;
